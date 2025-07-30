@@ -11,18 +11,15 @@ export default function App() {
   const [user, setUser] = useState(null);
   const [checkingSession, setCheckingSession] = useState(true);
 
-  // Check if user is already logged in on app load
   useEffect(() => {
     const getSession = async () => {
       const { data } = await supabase.auth.getSession();
-      const currentUser = data?.session?.user;
-      setUser(currentUser);
+      setUser(data?.session?.user || null);
       setCheckingSession(false);
     };
 
     getSession();
 
-    // Listen for login/logout
     const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user || null);
     });
@@ -35,18 +32,14 @@ export default function App() {
   }
 
   return (
-  <Router>
-    <>
+    <Router>
       <Routes>
         <Route path="/login" element={!user ? <LoginPage /> : <Navigate to="/dashboard" />} />
         <Route path="/dashboard" element={user ? <Dashboard /> : <Navigate to="/login" />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="*" element={<Navigate to={user ? "/dashboard" : "/login"} />} />
       </Routes>
-
       <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
-    </>
-  </Router>
-);
+    </Router>
+  );
 }
-
