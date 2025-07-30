@@ -55,40 +55,53 @@ export default function TranscriptionPanel({ user }) {
 
   return (
     <div className="space-y-10">
-      {/* Upload Section */}
-      <div className="bg-white rounded-xl p-6 shadow-md border border-gray-200">
-        <h2 className="text-2xl font-bold text-blue-600 mb-4">Transcribe Your Audio</h2>
-        <label className="block border-2 border-dashed border-blue-300 rounded-lg p-8 text-center cursor-pointer hover:border-blue-500 transition">
-          <input type="file" accept="audio/*" onChange={(e) => setFile(e.target.files[0])} className="hidden" />
-          <p className="text-gray-600">
-            <span className="text-blue-600 font-semibold">+</span> Click to upload audio
-          </p>
-          {file && <p className="mt-2 text-sm text-gray-800">{file.name}</p>}
-        </label>
+      {/* Upload Area */}
+      <div className="bg-white rounded-xl shadow-md border border-gray-200 p-8">
+        <div className="text-center mb-6">
+          <div className="border-2 border-dashed border-purple-300 rounded-lg py-10 px-6 cursor-pointer hover:border-purple-500 transition">
+            
+            <input
+              type="file"
+              accept="audio/*"
+              onChange={(e) => setFile(e.target.files[0])}
+              className="hidden"
+              id="file-upload"
+            />
+            <label htmlFor="file-upload" className="block text-gray-500 text-sm">
+              <div className="text-purple-600 font-semibold mb-2">Upload or drag an audio file here</div>
+              <div className="text-xs text-gray-400">
+                Max <strong>50MB</strong>. Supported: <code>.mp3</code>, <code>.wav</code>
+              </div>
+              {file && <p className="mt-2 text-sm text-gray-800">{file.name}</p>}
+            </label>
+          </div>
+        </div>
 
-        {errorMessage && <p className="mt-4 text-red-500">{errorMessage}</p>}
+        {errorMessage && <p className="text-center text-red-500">{errorMessage}</p>}
 
-        <button
-          onClick={handleUpload}
-          className="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold"
-          disabled={loading}
-        >
-          {loading ? "Transcribing..." : "Start Transcription"}
-        </button>
+        <div className="flex justify-center">
+          <button
+            onClick={handleUpload}
+            disabled={loading}
+            className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-medium shadow-sm"
+          >
+            {loading ? "Transcribing..." : "Upload & Transcribe"}
+          </button>
+        </div>
 
         {transcription && (
-          <div className="mt-6 bg-gray-100 rounded-lg p-4">
-            <h3 className="text-blue-600 font-semibold mb-2">Latest Transcription:</h3>
+          <div className="mt-6 bg-gray-100 p-4 rounded-lg">
+            <h3 className="text-purple-700 font-semibold mb-2">Latest Transcription:</h3>
             <p className="text-gray-800">{transcription}</p>
           </div>
         )}
       </div>
 
       {/* History Section */}
-      <div className="bg-white rounded-xl p-6 shadow-md border border-gray-200">
-        <h2 className="text-2xl font-bold text-blue-600 mb-4">Previous Transcriptions</h2>
+      <div className="bg-white rounded-xl shadow-md border border-gray-200 p-6">
+        <h2 className="text-xl font-bold text-purple-700 mb-4">Previous Transcriptions</h2>
         {history.length === 0 ? (
-          <p className="text-gray-500">No history yet.</p>
+          <p className="text-gray-500">No transcription history yet.</p>
         ) : (
           <div className="space-y-4 max-h-[400px] overflow-y-auto">
             {history.map((item) => (

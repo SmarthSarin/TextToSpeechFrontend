@@ -25,40 +25,43 @@ export default function AuthForm({ isLogin }) {
   };
 
   return (
-    <>
-      <input
-        type="email"
-        placeholder="Email"
-        className="border border-gray-300 rounded-lg p-3 w-full mb-4 focus:ring-2 focus:ring-blue-400 outline-none"
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        className="border border-gray-300 rounded-lg p-3 w-full mb-4 focus:ring-2 focus:ring-blue-400 outline-none"
-        onChange={(e) => setPassword(e.target.value)}
-      />
+  <>
+    <input
+      type="email"
+      placeholder="Email"
+      className="border border-gray-300 rounded-lg p-3 w-full mb-4 focus:ring-2 focus:ring-purple-400 outline-none"
+      onChange={(e) => setEmail(e.target.value)}
+    />
+    <input
+      type="password"
+      placeholder="Password"
+      className="border border-gray-300 rounded-lg p-3 w-full mb-4 focus:ring-2 focus:ring-purple-400 outline-none"
+      onChange={(e) => setPassword(e.target.value)}
+    />
 
-      {isLogin ? (
-        <>
-          <button
-            onClick={handleLogin}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg shadow mb-3"
-          >
-            Login
-          </button>
-          <p onClick={handlePasswordReset} className="text-blue-600 text-sm text-center cursor-pointer hover:underline">
-            Forgot Password?
-          </p>
-        </>
-      ) : (
+    {isLogin ? (
+      <>
         <button
-          onClick={handleSignup}
-          className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-lg shadow"
+          onClick={handleLogin}
+          className="w-full bg-gradient-to-r from-purple-600 to-yellow-500 hover:from-purple-700 hover:to-yellow-600 text-white font-semibold py-3 rounded-lg shadow mb-3 transition-all"
         >
-          Signup
+          Login
         </button>
-      )}
-    </>
-  );
+        <p
+          onClick={handlePasswordReset}
+          className="text-sm text-center text-purple-600 cursor-pointer hover:underline"
+        >
+          Forgot Password?
+        </p>
+      </>
+    ) : (
+      <button
+        onClick={handleSignup}
+        className="w-full bg-gradient-to-r from-purple-600 to-yellow-500 hover:from-purple-700 hover:to-yellow-600 text-white font-semibold py-3 rounded-lg shadow transition-all"
+      >
+        Signup
+      </button>
+    )}
+  </>
+);
 }

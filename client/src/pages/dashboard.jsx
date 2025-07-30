@@ -28,22 +28,24 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 text-gray-800 px-4 py-12 flex flex-col items-center">
-      <button
-        onClick={handleLogout}
-        className="absolute top-6 right-6 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg"
-      >
-        Logout
-      </button>
+  <div className="min-h-screen bg-gradient-to-br from-purple-100 via-white to-yellow-50 text-gray-800 px-4 py-12 flex flex-col items-center">
+    <button
+      onClick={handleLogout}
+      className="absolute top-6 right-6 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg shadow-sm"
+    >
+      Logout
+    </button>
 
-      <h1 className="text-4xl font-extrabold text-blue-600 text-center mb-2">Speech to Text</h1>
-      <p className="text-lg text-gray-600 text-center mb-10 max-w-xl">
-        Convert your voice into clear, readable text. Just upload your audio file and get started!
-      </p>
+    <h1 className="text-4xl font-extrabold text-purple-700 text-center mb-2">
+      Speech to Text
+    </h1>
+    <p className="text-center text-gray-500 mb-10 max-w-xl">
+      Upload or record audio to convert speech into accurate, readable text. Now with improved transcription UI and purple-gold elegance.
+    </p>
 
-      <div className="w-full max-w-4xl">
-        {user && <TranscriptionPanel user={user} />}
-      </div>
+    <div className="w-full max-w-5xl">
+      {user && <TranscriptionPanel user={user} />}
     </div>
-  );
+  </div>
+);
 }
