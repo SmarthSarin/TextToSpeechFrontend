@@ -1,55 +1,51 @@
-# Speech to Text — Frontend (React + Vite)
+# Speech to Text Frontend (React + Vite)
 
-Welcome to the Speech to Text web app — a modern and responsive React frontend that allows users to transcribe audio files into readable text using Google Speech-to-Text API (via a connected backend).
-
-This frontend is built with Vite + React, styled using Tailwind CSS, and powered by Supabase Auth for secure login/signup/password reset workflows.
+A sleek and modern frontend for transcribing audio files into readable text using Google Cloud Speech-to-Text API via a connected backend. This project uses **React + Vite**, **Supabase Auth**, **Tailwind CSS**, and is fully deployable to **Vercel**.
 
 ## Features
 
-- Clean and responsive UI (mobile-first)
-- Login & Signup authentication via Supabase
-- Forgot password and reset flow
-- Upload audio files (WAV/MP3/M4A)
-- Transcribe via backend endpoint
-- View previous transcription history
-- Protected dashboard (redirects if not logged in)
-- Fully styled with Tailwind CSS
-- Deployed-ready for Vercel
+* Login, Signup & Password Reset with Supabase Auth
+* Upload `.mp3`, `.wav`, `.m4a` audio files
+* Live transcription from backend using Google Speech-to-Text
+* View and scroll through past transcriptions
+* Password reset flow with email redirect
+* Toast notifications for success/errors (via `react-toastify`)
+* Responsive UI with a purple-gold gradient theme
+* Protected Dashboard with auto-redirect for unauthenticated users
+* Deploy-ready on Vercel
 
 
 ## Folder Structure
 
 ```
-
 src/
 ├── components/
-│   ├── authform.jsx              # Reusable login/signup form
-│   └── transcription\_panel.jsx   # Handles file upload & history
+│   ├── authform.jsx            # Reusable login/signup form with logic
+│   └── transcription_panel.jsx # File upload + history display
 ├── pages/
-│   ├── login.jsx                 # Login/Signup interface
-│   ├── dashboard.jsx             # Protected main panel after login
-│   └── reset\_password.jsx        # Password reset form
-├── App.jsx                       # Routes and session logic
-├── config.js                     # API base URL logic
-├── supabaseClient.js             # Supabase initialization
-├── index.css                     # Tailwind styles
-└── main.jsx                      # Entry point
-
-````
+│   ├── login.jsx               # Login and Signup UI
+│   ├── dashboard.jsx           # Authenticated dashboard
+│   └── reset_password.jsx      # Password reset form
+├── App.jsx                     # Main app + routing logic
+├── config.js                   # API URL fallback for dev/deploy
+├── supabaseClient.js           # Supabase setup
+├── index.css                   # TailwindCSS styles
+└── main.jsx                    # App entry point
+```
 
 
 ## Tech Stack
 
-| Stack         | Tool / Library               |
-|---------------|------------------------------|
-| Frontend      | React (with Vite)            |
-| Auth          | Supabase (email-based login) |
-| Styling       | Tailwind CSS                 |
-| HTTP Requests | Axios                        |
-| Routing       | React Router DOM             |
-| Hosting       | Vercel                       |
+| Purpose        | Tool / Library   |
+| -------------- | ---------------- |
+| Frontend       | React (Vite)     |
+| Authentication | Supabase         |
+| Styling        | Tailwind CSS     |
+| Routing        | React Router DOM |
+| Requests       | Axios            |
+| Notifications  | React Toastify   |
+| Hosting        | Vercel           |
 
----
 
 ## Getting Started
 
@@ -58,7 +54,7 @@ src/
 ```bash
 git clone https://github.com/your-username/speech-to-text-frontend.git
 cd speech-to-text-frontend
-````
+```
 
 ### 2. Install Dependencies
 
@@ -66,65 +62,71 @@ cd speech-to-text-frontend
 npm install
 ```
 
-### 3. Environment Setup
+### 3. Create `.env` file
 
-Create a `.env` file at the root:
+Create a `.env` file in the root directory with the following:
 
 ```env
 VITE_SUPABASE_URL=https://your-project.supabase.co
 VITE_SUPABASE_KEY=your-anon-key
-VITE_API_URL=http://localhost:5000   # or your backend render URL
+VITE_API_URL=http://localhost:5000 # or Render URL for backend
 ```
 
-### 4. Start Local Dev Server
+### 4. Run Dev Server
 
 ```bash
 npm run dev
 ```
 
-Now open `http://localhost:5173` in your browser.
+Your frontend will be available at `http://localhost:5173`
 
 
-## Authentication via Supabase
+## Authentication with Supabase
 
-* Uses email + password for login/signup
-* Includes password reset with redirectTo=/reset-password
-* Session is protected — unauthenticated users are redirected to /login
+* Email/password based login and signup
+* Includes password reset (via Supabase redirect)
+* Frontend checks auth session & redirects accordingly
+* Supabase credentials must be set via `.env` and Vercel Dashboard
+
+---
+
+## API Endpoints Expected from Backend
+
+| Endpoint                   | Method | Description                        |
+| -------------------------- | ------ | ---------------------------------- |
+| `/transcribe`              | POST   | Upload audio + user ID             |
+| `/transcriptions/:user_id` | GET    | Fetch user’s transcription history |
+
+> Make sure your backend supports:
+>
+> * CORS
+> * Multipart form data
+> * Uses Google Cloud Speech API
 
 
-## Backend Requirements
+## Vercel Deployment
 
-This frontend expects the following backend endpoints:
+1. Push frontend repo to GitHub
+2. Connect your GitHub repo to Vercel
+3. Set the following environment variables in **Vercel → Project Settings**:
 
-| Endpoint                   | Method | Description                   |
-| -------------------------- | ------ | ----------------------------- |
-| `/transcribe`              | POST   | Accepts audio file + user ID  |
-| `/transcriptions/:user_id` | GET    | Returns transcription history |
-
-Make sure your backend handles CORS and file uploads.
-
-
-## Deployment
-
-### Recommended: [Vercel](https://vercel.com)
-
-1. Push this project to GitHub
-2. Connect to Vercel → Import project
-3. Set the following environment variables in Vercel Dashboard:
-
+```env
+VITE_SUPABASE_URL=
+VITE_SUPABASE_KEY=
+VITE_API_URL=
 ```
-VITE_SUPABASE_URL
-VITE_SUPABASE_KEY
-VITE_API_URL
-```
 
-4. Click Deploy
+4. Click **Deploy**
+
+> No need to upload or expose Google credentials on Vercel — those are only used on your backend.
 
 
-## Optional Enhancements
+## Future Enhancements
 
-* Add toast notifications (react-hot-toast)
-* Add audio recording feature (Mic → Upload)
-* Password strength meter
+* Toast notifications (`react-toastify`)
+* Audio recording from microphone
+* Export transcript to PDF or `.txt`
+* Password strength validation
 * Dark mode toggle
-* Transcription download/export (PDF / .txt)
+* Language selection for transcription
+

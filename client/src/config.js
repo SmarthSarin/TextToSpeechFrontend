@@ -9,7 +9,7 @@ if (!VITE_API_URL) {
   if (hostname === "localhost") {
     VITE_API_URL = "http://localhost:5000"; // Development server
   } else {
-    VITE_API_URL = "https://talk2text-backend.onrender.com"; // Production fallback
+    VITE_API_URL = "https://texttospeechbackend-gloy.onrender.com"; // Production fallback
   }
 }
 
