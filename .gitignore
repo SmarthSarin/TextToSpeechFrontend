@@ -1,5 +1,6 @@
 # === NODE ===
 client/node_modules/
+node_modules
 
 # === ENV & Credentials ===
 .env
