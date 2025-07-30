@@ -13,8 +13,8 @@
       "apiBaseUrl": "http://localhost:5000"
     },
     "production": {
-      "frontendUrl": "https://talk2text-mern.vercel.app",
-      "apiBaseUrl": "https://texttospeechbackend.onrender.com"
+      "frontendUrl": "https://speech-to-text-frontend-phi.vercel.app",
+      "apiBaseUrl": "https://texttospeechbackend-1.onrender.com"
     }
   },
   "features": [
