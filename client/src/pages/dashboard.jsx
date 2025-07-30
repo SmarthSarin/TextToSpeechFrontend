@@ -40,7 +40,7 @@ export default function Dashboard() {
       Speech to Text
     </h1>
     <p className="text-center text-gray-500 mb-10 max-w-xl">
-      Upload or record audio to convert speech into accurate, readable text. Now with improved transcription UI and purple-gold elegance.
+      Convert your voice into clear, readable text. Just upload your audio file and get started!
     </p>
 
     <div className="w-full max-w-5xl">

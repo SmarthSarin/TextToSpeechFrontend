@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import API_BASE_URL from "../config";
+import { toast } from "react-toastify";
 
 export default function TranscriptionPanel({ user }) {
   const [file, setFile] = useState(null);
   const [transcription, setTranscription] = useState("");
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     if (user) fetchHistory(user.id);
@@ -19,16 +19,20 @@ export default function TranscriptionPanel({ user }) {
       setHistory(res.data.transcriptions);
     } catch (err) {
       console.error("Failed to load history:", err.message);
-      setErrorMessage("Failed to load history");
+      toast.error("Failed to load history.");
     }
   };
 
   const handleUpload = async () => {
-    if (!file) return setErrorMessage("Please select a file first.");
+    if (!file) {
+      toast.warn("Please select a file first.");
+      return;
+    }
 
     const allowedTypes = ["audio/mpeg", "audio/wav", "audio/mp3"];
     if (!allowedTypes.includes(file.type)) {
-      return setErrorMessage("Invalid file type. Only MP3/WAV allowed.");
+      toast.error("Invalid file type. Only MP3/WAV allowed.");
+      return;
     }
 
     const formData = new FormData();
@@ -36,18 +40,19 @@ export default function TranscriptionPanel({ user }) {
     formData.append("user_id", user.id);
 
     setLoading(true);
-    setErrorMessage("");
     setTranscription("");
+    toast.info("Uploading and transcribing...");
 
     try {
       const res = await axios.post(`${API_BASE_URL}/transcribe`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       setTranscription(res.data.transcription);
+      toast.success("Transcription complete!");
       fetchHistory(user.id);
     } catch (err) {
       console.error("Upload error:", err.message);
-      setErrorMessage("Upload failed. Try again.");
+      toast.error("Upload failed. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -59,7 +64,6 @@ export default function TranscriptionPanel({ user }) {
       <div className="bg-white rounded-xl shadow-md border border-gray-200 p-8">
         <div className="text-center mb-6">
           <div className="border-2 border-dashed border-purple-300 rounded-lg py-10 px-6 cursor-pointer hover:border-purple-500 transition">
-            
             <input
               type="file"
               accept="audio/*"
@@ -76,8 +80,6 @@ export default function TranscriptionPanel({ user }) {
             </label>
           </div>
         </div>
-
-        {errorMessage && <p className="text-center text-red-500">{errorMessage}</p>}
 
         <div className="flex justify-center">
           <button
